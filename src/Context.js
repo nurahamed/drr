@@ -46,11 +46,17 @@ class ProductProvider extends Component {
     if (test === "company") {
       this.state.company = e.target.value;
     }
-    const tempData = [this.state.id, this.state.title, this.state.info, this.state.price, this.state.company];
+    const tempData = [
+      this.state.id,
+      this.state.title,
+      this.state.info,
+      this.state.price,
+      this.state.company,
+    ];
 
     this.setState({
-        updateEdit : tempData
-    })
+      updateEdit: tempData,
+    });
   };
 
   // for save
@@ -59,20 +65,57 @@ class ProductProvider extends Component {
       const SavedRecord = this.state.Alldata;
       const index = SavedRecord.indexOf(this.getRecord(id));
       const Record = SavedRecord[index];
-      Record['title'] =  this.state.updateEdit[1];
-      Record['info'] =  this.state.updateEdit[2];
-      Record['price'] =  this.state.updateEdit[3];
-      Record['company'] =  this.state.updateEdit[4];
-        this.setState({
-            Alldata: [...this.state.Alldata], id: "", title: "", info: "", price: "", company:""
-        })
+      Record["title"] = this.state.updateEdit[1];
+      Record["info"] = this.state.updateEdit[2];
+      Record["price"] = this.state.updateEdit[3];
+      Record["company"] = this.state.updateEdit[4];
+      this.setState({
+        Alldata: [...this.state.Alldata],
+        id: "",
+        title: "",
+        info: "",
+        price: "",
+        company: "",
+      });
+    } else if (id === "") {
+      alert("fill out the input then add");
+    } else {
+      const Maxid = Math.max(...this.state.Alldata.map((item) => item.id));
+      const id = Maxid + 1;
+      const newArr = [];
+      newArr["title"] = this.state.updateEdit[1];
+      newArr["info"] = this.state.updateEdit[2];
+      newArr["price"] = this.state.updateEdit[3];
+      newArr["company"] = this.state.updateEdit[4];
+      this.setState({
+        Alldata: [...this.state.Alldata, newArr],
+        id: "",
+        title: "",
+        info: "",
+        price: "",
+        company: "",
+      });
     }
+  };
+  onDelete = (id) => {
+    const tempProduct = this.state.Alldata.filter((item) => item.id !== id);
+    this.setState({
+      Alldata: tempProduct,
+    });
   };
   render() {
     console.log(this.state.Alldata);
     return (
       <div>
-        <ProductContext.Provider value={{ ...this.state, onEdit: this.onEdit, updateValue :this.updateValue, onSave: this.onSave }}>
+        <ProductContext.Provider
+          value={{
+            ...this.state,
+            onEdit: this.onEdit,
+            updateValue: this.updateValue,
+            onSave: this.onSave,
+            onDelete: this.onDelete,
+          }}
+        >
           {this.props.children}
         </ProductContext.Provider>
       </div>

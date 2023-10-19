@@ -5,7 +5,7 @@ export default class Home extends Component {
   render() {
     return (
       <div className="container">
-        <h3>DRR</h3>
+        <h3>CURD Operation</h3>
         <ProductConsumer>
           {(value) => {
             return (
@@ -14,8 +14,8 @@ export default class Home extends Component {
                   <tr>
                     <th>Title</th>
                     <th>Information</th>
-                    <th>Company</th>
                     <th>Price</th>
+                    <th>Company</th>
                     <th>Action</th>
                   </tr>
                   <tr>
@@ -57,8 +57,8 @@ export default class Home extends Component {
                       <tr>
                         <td>{product.title}</td>
                         <td>{product.info}</td>
-                        <td>{product.company}</td>
                         <td>{product.price}</td>
+                        <td>{product.company}</td>
 
                         <td>
                           <Stack direction="horizontal" gap={2}>
